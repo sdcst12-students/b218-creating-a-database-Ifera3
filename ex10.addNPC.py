@@ -1,5 +1,5 @@
 #!python3
-import sqlite3
+#import sqlite3
 import random
 file = 'dbase.db'
 connection = sqlite3.connect(file)

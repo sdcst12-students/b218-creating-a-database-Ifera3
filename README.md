@@ -44,6 +44,8 @@ where id=93
 Assignment:
 Create a database for a veterinarian.  You will need to create your own tables and choose the variable types that best suit these fields/columns.
 There will be 3 tables:
+
+```
 customers
     id : primary key integer
     fname: first name 
@@ -53,8 +55,9 @@ customers
     address: phyiscal address
     city: city where they live
     postalcode: their postal code
+```
 
-
+```
 pets
     id: primary key integer
     name: pet name
@@ -62,7 +65,9 @@ pets
     breed: description of breed (example German Sheperd, Mixed, Persion)
     birthdate: birthdate of pet (could be used to calculate their age)
     ownerID: to match the ID number in customers ID
+```
 
+```
 visits
     id: primary key integer
     ownerid: the id of the owner who brought in their pet. Matches primary key of owner table
@@ -70,7 +75,7 @@ visits
     details: details what the visit was about.  Could be quite lengthy!
     cost: how much was the visit
     paid: how much has been paid so far, used to find outstanding debts
-
+```
 
 Create a program that allows you to interface with this database. 
 We will be doing this in parts over the next few classes.
