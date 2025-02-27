@@ -48,14 +48,25 @@ def addCustomer():
         phoneNum = phoneNum.replace('-','')
         phoneNum = phoneNum.replace('(','')
         phoneNum = phoneNum.replace(')','')
+    phoneNum = int(phoneNum)
     email = input("Email adress of new customer: ")
     adress = input("Adress of new customer: ")
     city = input("City of new customer: ")
     postalcode = input("Postalcode of new customer: ")
-    look = (lname,phoneNum,email,adress,city,postalcode)
+    look = (f"'{lname}'",phoneNum,f"'{email}'",f"'{adress}'",f"'{city}'",f"'{postalcode}'")
     columns = ('lastName','phoneNum','email','adress','city','postalcode')
     for i in range(6):
-        others = surchTalbe(look[i],'Owners','ID',columns[i])
+        others = surchTalbe(look[i],'Owners',f"ID",columns[i])
+        #print(others)
+        if others != []:
+            print(f"Customer with the same {columns[i]} of {look[i]} already exsists with IDs : ", end = '')
+            for id in others:
+                print(f"{id[0]} ", end='')
+            con = input("\nDo you wish to add the new customer (y or n): ")
+            if con == 'y':
+                break
+            else:
+                return
     query = f"insert into owners (firstName,lastName,phoneNum,email,adress,city,postalcode) values ('{fname}','{lname}',{phoneNum},'{email}','{adress}','{city}','{postalcode}');"
     cursor.execute(query)
     #cursor.execute("select * from owners;")
@@ -63,9 +74,22 @@ def addCustomer():
 
 def surchTalbe(surchIteam, table, find = "*", column = "ID"):
     query = f"select {find} from {table} where {column} = {surchIteam};"
+    #print(query)
     cursor.execute(query)
     result = cursor.fetchall()
     return result
 
+def frontEndSurch():
+    columntable = {"owners":"ID or firstName, lastName, phoneNum, email, adress, city, or postalcode","pets":"ID, name, type, breed, birthdate, ownerID","pisits":"ID, ownerID integer, petID, details, cost, paid"}
+    table = input('What able would you like to surch Owners, Pets, or Visits: ').lower()
+    iteam = input('What are you surching for: ')
+    column = input(f"What column is '{iteam}' founf in {columntable[table]}: ")
+    find = input(f"What columns would you like returned {columntable[table]}: ")
+    result = surchTalbe(f"'{iteam}'", table, find, column)
+    for i in result:
+        print(i)
+
 addCustomer()
-print(surchTalbe(2,"Owners"))
+addCustomer()
+frontEndSurch()
+#print(surchTalbe(1,"Owners",find='ID,phoneNum',column="phoneNum"))
